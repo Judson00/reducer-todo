@@ -1,9 +1,11 @@
 import React from 'react';
 
-import Todo from './Todo';
+export const Todo = props => {
+  const { item } = props;
+  return item.get('isDone') ? <strike>{item.get('text')}</strike> : <span>{item.get('text')}</span>
+}
 
-
-const TodoList = props => {
+export const TodoList = props => {
   const { todos, toggleTodo, addTodo } = props;
 
   const onSubmit = event => {
@@ -18,17 +20,20 @@ const TodoList = props => {
     }
   }
 
-  const { todos } = props;
+  const toggleClick = id => event => toggleTodo(id);
+
   return (
     <div>
       <input
         type='text'
         placeholder='Add Todo'
+        onKeyDown={onSubmit}
       />
         <ul>
           {todos.map(item => (
             <li key={item.get('id')}>
-              <Todo todo={item} />
+              onClick={toggleClick(item.get('id'))}
+              <Todo todo={item.toJS()} />
             </li>
           ))}
         </ul>
