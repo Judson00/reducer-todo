@@ -1,7 +1,11 @@
 import React from 'react';
+import { createStore } from 'redux';
 
 import './App.css';
 import TodoList from './components/TodoList';
+import reducer from './reducer';
+
+const store = createStore(reducer)
 
 const dummyTodos = [
   { 
@@ -30,7 +34,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>Todo List</h1>
-      <TodoList todos={dummyTodos} />
+      <TodoList todos={store.getState()} />
     </div>
   );
 }
