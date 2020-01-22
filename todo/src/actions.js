@@ -1,20 +1,20 @@
 const uniqueId = () => Math.random().toString(34).slice(2);
 
-export const addTodo = text => {
+export function addTodo(text){
   return{
     type: 'Add_TODO',
     payload: {
       id: uniqueId(),
-      idDone: false,
+      isDone: false,
       text: text
     }
-  }
+  };
 }
 
 
-export const toggleTodo = id => {
+export function toggleTodo(id){
   return {
     type: 'TOGGLE_TODO',
     payload: id
-  }
+  };
 }

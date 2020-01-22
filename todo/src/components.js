@@ -1,11 +1,16 @@
 import React from 'react';
 
-export const Todo = props => {
-  const { item } = props;
-  return item.get('isDone') ? <strike>{item.get('text')}</strike> : <span>{item.get('text')}</span>
+export function Todo(props){
+  const { todo } = props;
+  // return item.get('isDone') ? <strike>{item.get('text')}</strike> : <span>{item.get('text')}</span>
+  if(todo.isDone){
+    return <strike>{todo.text}</strike>
+  }else{
+    return <span>{todo.text}</span>
+  }
 }
 
-export const TodoList = props => {
+export function TodoList(props) {
   const { todos, toggleTodo, addTodo } = props;
 
   const onSubmit = event => {
@@ -18,27 +23,27 @@ export const TodoList = props => {
       input.value = '';
       addTodo(text);
     }
-  }
+  };
 
   const toggleClick = id => event => toggleTodo(id);
 
   return (
-    <div>
+    <div className='todo'>
       <input
         type='text'
+        className='todo_entry'
         placeholder='Add Todo'
         onKeyDown={onSubmit}
       />
-        <ul>
-          {todos.map(item => (
-            <li key={item.get('id')}>
-              onClick={toggleClick(item.get('id'))}
-              <Todo todo={item.toJS()} />
+        <ul className='todo_list'>
+          {todos.map(t => (
+            <li key={t.get('id')}
+              className='todo_item'
+              onClick={toggleClick(t.get('id'))}>
+              <Todo todo={t.toJS()} />
             </li>
           ))}
         </ul>
     </div>
-  )
+  );
 }
-
-export default TodoList;
